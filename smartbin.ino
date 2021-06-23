@@ -55,25 +55,50 @@ void loop()
   
   if (cm<2500)
   {
-  // if the distance is less than 3 meter, Green LED is ON
-  if (fsrReading < threshold) 
-  {
+  // if the distance is less than 3 meter, Green LED is ON (double blink for 2 seconds)
+    digitalWrite(ledRed, LOW);
+    digitalWrite(ledYellow, LOW);
     digitalWrite(ledGreen, HIGH);
-    // insert another set of instructions below
-    
+    delay(1000);
+    digitalWrite(ledGreen, LOW);
+    digitalWrite(ledGreen, HIGH);
+    delay(1000);
+    digitalWrite(ledGreen, LOW);
+  if (fsrReading < threshold) //CAPACITY more than 0% and less than 50%
+  {
+    digitalWrite(ledYellow, HIGH);
+    delay(3000);
+    digitalWrite(ledYellow, LOW);
 
   }
-  else 
+  else if(fsrReading < threshold) //CAPACITY more than 50% and less than 100%
   {
-    digitalWrite (transistor, HIGH);
-    delay(500);
-    digitalWrite (transistor, LOW);
-    delay(500);
+    digitalWrite(ledGreen, HIGH);
+    delay(3000);
+    digitalWrite(ledGreen, LOW);
   }
+   else //CAPACITY more than 100%
+   {
+    digitalWrite(ledRed, HIGH);
+    delay(3000);
+    digitalWrite(ledRed, LOW);
+   }
   }
-  else if
+  else if (cm>2500 && cm<3000)
   {
-  
+   // if the distance is less than 3 meter and more than 2.5 meter, Red LED is ON (double blink for 2 seconds)
+    digitalWrite(ledGreen, LOW);
+    digitalWrite(ledYellow, LOW);
+    digitalWrite(ledRed, HIGH);
+    delay(1000);
+    digitalWrite(ledRed, LOW);
+    digitalWrite(ledRed, HIGH);
+    delay(1000);
+    digitalWrite(ledRed, LOW);
+  }
+  else
+  {
+  break;
   }
   // print the analog value:
   Serial.println(analogValue);
